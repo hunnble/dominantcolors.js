@@ -1,0 +1,42 @@
+{
+  "name": "dominantcolors",
+  "version": "0.0.1",
+  "description": "extract dominant colors from image",
+  "main": "dist/dominantcolors.js",
+  "module": "dist/dominantcolors.mjs",
+  "jsnext:main": "dist/dominantcolors.mjs",
+  "umd:main": "dist/dominantcolors.umd.js",
+  "unpkg": "dist/dominantcolors.umd.js",
+  "browser": "dist/dominantcolors.umd.js",
+  "scripts": {
+    "build:no-min": "microbundle -f cjs,es --no-compress --sourcemap false",
+    "build:umd": "microbundle -f umd",
+    "build": "npm-run-all clean build:*",
+    "clean": "if [ -d dist ]; then rm dist/*; fi",
+    "dev": "microbundle watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunnble/dominantcolors.js.git"
+  },
+  "keywords": [
+    "dominant",
+    "main",
+    "color",
+    "palette",
+    "image"
+  ],
+  "author": "hunnble",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hunnble/dominantcolors.js/issues"
+  },
+  "homepage": "https://github.com/hunnble/dominantcolors.js#readme",
+  "devDependencies": {
+    "microbundle": "^0.11.0",
+    "npm-run-all": "^4.1.5"
+  },
+  "files": [
+    "dist"
+  ]
+}
