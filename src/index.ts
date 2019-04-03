@@ -20,7 +20,15 @@ async function getImageData (src: string): Promise<Uint8ClampedArray> {
   })
 }
 
-export default async function (image: string | ArrayBuffer) {
+interface IOptions {
+  ignoreTransparent: Boolean
+}
+
+const defaultOptions = {
+  ignoreTransparent: true
+}
+
+export default async function (image: string | ArrayBuffer, options: IOptions = defaultOptions) {
   if (typeof image === 'string') {
     image = await getImageData(image)
   }
