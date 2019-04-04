@@ -21,11 +21,11 @@ async function getImageData (src: string): Promise<Uint8ClampedArray> {
 }
 
 interface IOptions {
-  ignoreTransparent: Boolean
+  omitTransparentPixel: Boolean
 }
 
 const defaultOptions = {
-  ignoreTransparent: true
+  omitTransparentPixel: true
 }
 
 export default async function (image: string | ArrayBuffer, options: IOptions = defaultOptions) {
