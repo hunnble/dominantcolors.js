@@ -24,25 +24,29 @@ async function getImageData(src: string): Promise<Uint8ClampedArray> {
 }
 
 interface IOptions {
+  colorCount: number;
+  method: string;
   omitTransparentPixel: boolean;
-  count: number;
 }
 
 const defaultOptions = {
+  colorCount: 2,
   omitTransparentPixel: true,
-  count: 6
+  method: "medianCut"
 };
 
 export default async function(
-  image: string | ArrayBuffer | any,
+  image: string | ArrayBuffer,
   options: IOptions = defaultOptions
 ) {
   if (typeof image === "string") {
     image = await getImageData(image);
   }
 
-  const { count } = options;
+  Object.assign(options, defaultOptions);
+  const { colorCount, method } = options;
+  const func = method === "medianCut" ? medianCut : () => [];
 
-  const boxes = medianCut(image, count);
-  return boxes.slice(0, count).map(box => getColor(box.data));
+  const boxes = func(image, colorCount);
+  return boxes.slice(0, colorCount).map(box => getColor(box.data));
 }
