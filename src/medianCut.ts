@@ -40,13 +40,13 @@ export class ColorBox {
 }
 
 function getColorRange(data): IColorRange {
-  const pixelCount = data.length / 4;
-  let minRed: number = MIN_COLOR;
-  let maxRed: number = MAX_COLOR;
-  let minGreen: number = MIN_COLOR;
-  let maxGreen: number = MAX_COLOR;
-  let minBlue: number = MIN_COLOR;
-  let maxBlue: number = MAX_COLOR;
+  const pixelCount: number = data.length / 4;
+  let minRed: number = MAX_COLOR;
+  let maxRed: number = MIN_COLOR;
+  let minGreen: number = MAX_COLOR;
+  let maxGreen: number = MIN_COLOR;
+  let minBlue: number = MAX_COLOR;
+  let maxBlue: number = MIN_COLOR;
 
   for (let i = 0; i < pixelCount; i += 1) {
     const { redData, greenData, blueData } = getRGBFromData(data, i);
@@ -96,6 +96,8 @@ function getMedianColorCount(colorBox: ColorBox, cutEdgeIdx: number): number {
   const colors: Object = {};
   let colorCounts: Array<IColorCount> = [];
   let color: number;
+  let total: number = 0;
+  let medianIdx: number = 0;
 
   for (let i = 0; i < colorBox.total; i += 1) {
     color = colorBox.data[i * 4 + cutEdgeIdx];
@@ -106,15 +108,24 @@ function getMedianColorCount(colorBox: ColorBox, cutEdgeIdx: number): number {
     }
   }
   for (const key in colors) {
-    colorCounts.push({
-      color: parseInt(key, 10),
-      count: colors[key]
-    });
+    color = parseInt(key, 10);
+    if (color !== 0) {
+      colorCounts.push({
+        color,
+        count: colors[key]
+      });
+    }
   }
   colorCounts.sort((prev, next) => prev.count - next.count);
-  const medianIdx = Math.floor(colorCounts.length / 2);
+  for (let i = 0; i < colorCounts.length; i += 1) {
+    total += colorCounts[i].count;
+    if (total >= colorBox.total / 2 || i === colorCounts.length - 1) {
+      medianIdx = i;
+      break;
+    }
+  }
   let count = 0;
-  for (let i = 0; i <= medianIdx; i += 1) {
+  for (let i = 0; i < medianIdx; i += 1) {
     count += colorCounts[i].count;
   }
 
@@ -123,9 +134,7 @@ function getMedianColorCount(colorBox: ColorBox, cutEdgeIdx: number): number {
 
 function cutBox(colorBox: ColorBox): Array<ColorBox> {
   const cutEdgeIdx: number = getCutEdgeIdx(colorBox.colorRange);
-  console.log(cutEdgeIdx);
   const count: number = getMedianColorCount(colorBox, cutEdgeIdx);
-  console.log(count);
   const leftBox: ColorBox = new ColorBox(colorBox.data.slice(0, count * 4));
   const rightBox: ColorBox = new ColorBox(colorBox.data.slice(count * 4));
 
