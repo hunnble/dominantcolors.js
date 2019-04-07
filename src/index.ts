@@ -43,7 +43,7 @@ export default async function(
     image = await getImageData(image);
   }
 
-  Object.assign(options, defaultOptions);
+  options = Object.assign(defaultOptions, options);
   const { colorCount, method } = options;
   const func = method === "medianCut" ? medianCut : () => [];
 
