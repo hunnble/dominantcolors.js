@@ -1,3 +1,5 @@
+import medianCut from "./medianCut";
+
 async function getImageData(src: string): Promise<Uint8ClampedArray> {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -32,9 +34,10 @@ export default async function(
   image: string | ArrayBuffer | any,
   options: IOptions = defaultOptions
 ) {
-  console.log(typeof image);
   if (typeof image === "string") {
     image = await getImageData(image);
     console.log(image);
   }
+
+  return medianCut(image);
 }
