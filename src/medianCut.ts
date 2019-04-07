@@ -1,4 +1,4 @@
-import { getRGBFromData, getColor } from "./helper";
+import { getRGBFromData } from "./helper";
 
 const MIN_COLOR = 0;
 const MAX_COLOR = 255;
@@ -23,7 +23,7 @@ interface IColorCount {
   count: number;
 }
 
-class ColorBox {
+export class ColorBox {
   public data;
   public rank: number;
   public colorRange: IColorRange;
@@ -92,7 +92,7 @@ function getCutEdgeIdx(colorRange: IColorRange): number {
   return edges.indexOf(maxEdge);
 }
 
-function getMedianColor(colorBox: ColorBox, cutEdgeIdx: number): IColorCount {
+function getMedianColorCount(colorBox: ColorBox, cutEdgeIdx: number): number {
   const colors: Object = {};
   let colorCounts: Array<IColorCount> = [];
   let color: number;
@@ -108,7 +108,7 @@ function getMedianColor(colorBox: ColorBox, cutEdgeIdx: number): IColorCount {
   for (const key in colors) {
     colorCounts.push({
       color: parseInt(key, 10),
-      count: colorCounts[key]
+      count: colors[key]
     });
   }
   colorCounts.sort((prev, next) => prev.count - next.count);
@@ -117,29 +117,31 @@ function getMedianColor(colorBox: ColorBox, cutEdgeIdx: number): IColorCount {
   for (let i = 0; i <= medianIdx; i += 1) {
     count += colorCounts[i].count;
   }
-  return {
-    color: colorCounts[medianIdx].color,
-    count
-  };
+
+  return count;
 }
 
-function cutBox(colorBox: ColorBox) {
+function cutBox(colorBox: ColorBox): Array<ColorBox> {
   const cutEdgeIdx: number = getCutEdgeIdx(colorBox.colorRange);
-  const {
-    color: medianColor,
-    count: medianCount
-  }: IColorCount = getMedianColor(colorBox, cutEdgeIdx);
+  console.log(cutEdgeIdx);
+  const count: number = getMedianColorCount(colorBox, cutEdgeIdx);
+  console.log(count);
+  const leftBox: ColorBox = new ColorBox(colorBox.data.slice(0, count * 4));
+  const rightBox: ColorBox = new ColorBox(colorBox.data.slice(count * 4));
+
+  return [leftBox, rightBox];
 }
 
-export default function medianCut(data, count: number = 1) {
-  const colorBox = new ColorBox(data);
-  let boxes = [colorBox];
+export default function medianCut(data, count: number = 1): Array<ColorBox> {
+  const colorBox: ColorBox = new ColorBox(data);
+  let boxes: Array<ColorBox> = [colorBox];
 
   while (boxes.length < count) {
     boxes.sort((prev, next) => prev.rank - next.rank);
     const colorBox = boxes.pop();
-    var cutBoxes = cutBox(colorBox);
+    const cutBoxes: Array<ColorBox> = cutBox(colorBox);
     boxes = boxes.concat(cutBoxes);
   }
-  return getColor(colorBox.data);
+
+  return boxes;
 }

@@ -1,4 +1,5 @@
-import medianCut from "./medianCut";
+import medianCut, { ColorBox } from "./medianCut";
+import { getColor } from "./helper";
 
 async function getImageData(src: string): Promise<Uint8ClampedArray> {
   return new Promise((resolve, reject) => {
@@ -23,11 +24,13 @@ async function getImageData(src: string): Promise<Uint8ClampedArray> {
 }
 
 interface IOptions {
-  omitTransparentPixel: Boolean;
+  omitTransparentPixel: boolean;
+  count: number;
 }
 
 const defaultOptions = {
-  omitTransparentPixel: true
+  omitTransparentPixel: true,
+  count: 6
 };
 
 export default async function(
@@ -36,8 +39,10 @@ export default async function(
 ) {
   if (typeof image === "string") {
     image = await getImageData(image);
-    console.log(image);
   }
 
-  return medianCut(image);
+  const { count } = options;
+
+  const boxes = medianCut(image, count);
+  return boxes.slice(0, count).map(box => getColor(box.data));
 }
