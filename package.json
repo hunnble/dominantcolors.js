@@ -1,5 +1,5 @@
 {
-  "name": "dominantcolors",
+  "name": "dominantcolors.js",
   "version": "0.0.1",
   "description": "extract dominant colors from image",
   "main": "dist/dominantcolors.js",
