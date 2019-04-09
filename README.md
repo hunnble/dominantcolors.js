@@ -1,7 +1,7 @@
 ## dominantcolors.js
 
-![npm-image](http://img.shields.io/npm/v/router-for-spa.svg)
-![downloads-image](http://img.shields.io/npm/dm/router-for-spa.svg)
+![npm-image](http://img.shields.io/npm/v/dominantcolors.js.svg)
+![downloads-image](http://img.shields.io/npm/dm/dominantcolors.js.svg)
 
 > Extract dominant colors from image. [source code](https://github.com/hunnble/dominantcolors.js)
 
