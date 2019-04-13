@@ -15,7 +15,7 @@ yarn add dominantcolors.js
 ```
 
 ```javascript
-dominantcolors("./example.jpg", {
+dominantcolorsJs("./example.jpg", {
   colorCount: 4
 })
   .then(result => {
