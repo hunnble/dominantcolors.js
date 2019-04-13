@@ -36,7 +36,7 @@ const defaultOptions = {
 };
 
 export default async function(
-  image: string | ArrayBuffer,
+  image: string | Uint8ClampedArray | Array<number>,
   options: IOptions = defaultOptions
 ) {
   if (typeof image === "string") {
@@ -44,9 +44,21 @@ export default async function(
   }
 
   options = Object.assign(defaultOptions, options);
-  const { colorCount, method } = options;
-  const func = method === "medianCut" ? medianCut : () => [];
+  const { colorCount, method, omitTransparentPixel } = options;
+  if (omitTransparentPixel) {
+    let tempImage = image;
+    image = [];
+    for (let i = 0; i < tempImage.length / 4; i += 1) {
+      if (tempImage[i * 4 + 3]) {
+        image.push(tempImage[i * 4]);
+        image.push(tempImage[i * 4 + 1]);
+        image.push(tempImage[i * 4 + 2]);
+        image.push(tempImage[i * 4 + 3]);
+      }
+    }
+  }
 
+  const func = method === "medianCut" ? medianCut : () => [];
   const boxes = func(image, colorCount);
   return boxes.slice(0, colorCount).map(box => getColor(box.data));
 }
