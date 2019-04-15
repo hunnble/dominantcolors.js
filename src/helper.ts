@@ -1,5 +1,3 @@
-type colorFormat = "hex";
-
 function toHex(count: number) {
   let hex: string = Math.round(count)
     .toString(16)
@@ -18,7 +16,7 @@ export function getRGBFromData(data, idx) {
   };
 }
 
-export function getColor(data, format: colorFormat = "hex") {
+export function getColor(data, format: string = "hex"): Object | string {
   const pixelCount = data.length / 4;
   let red: number = 0;
   let green: number = 0;
@@ -33,6 +31,14 @@ export function getColor(data, format: colorFormat = "hex") {
   red = red / pixelCount;
   green = green / pixelCount;
   blue = blue / pixelCount;
+
+  if (format === "rgb") {
+    return {
+      red: Math.round(red),
+      green: Math.round(green),
+      blue: Math.round(blue)
+    };
+  }
 
   if (format === "hex") {
     return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;

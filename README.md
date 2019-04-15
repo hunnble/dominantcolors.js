@@ -18,7 +18,9 @@ yarn add dominantcolors.js
 const dominantcolorsJs = require("dominantcolors.js");
 
 dominantcolorsJs("./example.jpg", {
-  colorCount: 4
+  count: 4,
+  omitTransparentPixel: true,
+  colorFormat: "hex" // hex or rgb
 })
   .then(result => {
     // result is an array of colors

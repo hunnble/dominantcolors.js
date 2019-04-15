@@ -24,13 +24,15 @@ async function getImageData(src: string): Promise<Uint8ClampedArray> {
 }
 
 interface IOptions {
-  colorCount: number;
+  count: number;
+  colorFormat: string;
   method: string;
   omitTransparentPixel: boolean;
 }
 
 const defaultOptions = {
-  colorCount: 2,
+  count: 4,
+  colorFormat: "hex",
   omitTransparentPixel: true,
   method: "medianCut"
 };
@@ -44,7 +46,7 @@ export default async function(
   }
 
   options = Object.assign(defaultOptions, options);
-  const { colorCount, method, omitTransparentPixel } = options;
+  const { count, colorFormat, method, omitTransparentPixel } = options;
   if (omitTransparentPixel) {
     let tempImage = image;
     image = [];
@@ -59,6 +61,6 @@ export default async function(
   }
 
   const func = method === "medianCut" ? medianCut : () => [];
-  const boxes = func(image, colorCount);
-  return boxes.slice(0, colorCount).map(box => getColor(box.data));
+  const boxes = func(image, count);
+  return boxes.slice(0, count).map(box => getColor(box.data, colorFormat));
 }
