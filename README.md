@@ -15,6 +15,8 @@ yarn add dominantcolors.js
 ```
 
 ```javascript
+const dominantcolorsJs = require("dominantcolors.js");
+
 dominantcolorsJs("./example.jpg", {
   colorCount: 4
 })
