@@ -38,7 +38,7 @@ const defaultOptions = {
 };
 
 export default async function(
-  image: string | Uint8ClampedArray | Array<number>,
+  image: string | Uint8ClampedArray | number[],
   options: IOptions = defaultOptions
 ) {
   if (typeof image === "string") {

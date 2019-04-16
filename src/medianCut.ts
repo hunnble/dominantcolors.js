@@ -31,7 +31,7 @@ export class ColorBox {
   private getColorRange: Function = getColorRange;
   public getVolume: Function = getVolume;
 
-  constructor(data) {
+  constructor(data: Uint8ClampedArray | number[]) {
     this.data = data;
     this.total = data.length / 4;
     this.colorRange = this.getColorRange(data);
@@ -39,7 +39,7 @@ export class ColorBox {
   }
 }
 
-function getColorRange(data): IColorRange {
+function getColorRange(data: Uint8ClampedArray | number[]): IColorRange {
   const pixelCount: number = data.length / 4;
   let minRed: number = MAX_COLOR;
   let maxRed: number = MIN_COLOR;
@@ -82,7 +82,7 @@ function getVolume(colorRange: IColorRange): number {
 
 function getCutEdgeIdx(colorRange: IColorRange): number {
   const { red, green, blue } = colorRange;
-  const edges: Array<number> = [
+  const edges: number[] = [
     red.max - red.min,
     green.max - green.min,
     blue.max - blue.min
@@ -94,7 +94,7 @@ function getCutEdgeIdx(colorRange: IColorRange): number {
 
 function getMedianColor(colorBox: ColorBox, cutEdgeIdx: number): number {
   const colors: Object = {};
-  let colorCounts: Array<IColorCount> = [];
+  let colorCounts: IColorCount[] = [];
   let color: number;
   let total: number = 0;
   let medianIdx: number = 0;
@@ -128,12 +128,12 @@ function getMedianColor(colorBox: ColorBox, cutEdgeIdx: number): number {
   return colorCounts[medianIdx].color;
 }
 
-function cutBox(colorBox: ColorBox): Array<ColorBox> {
+function cutBox(colorBox: ColorBox): ColorBox[] {
   const cutEdgeIdx: number = getCutEdgeIdx(colorBox.colorRange);
   const medianColor: number = getMedianColor(colorBox, cutEdgeIdx);
-  let leftData: Array<number> = [];
-  let rightData: Array<number> = [];
-  let targetData: Array<number>;
+  let leftData: number[] = [];
+  let rightData: number[] = [];
+  let targetData: number[];
   for (let i = 0; i < colorBox.total; i += 1) {
     if (colorBox.data[i * 4 + cutEdgeIdx] < medianColor) {
       targetData = leftData;
@@ -153,14 +153,17 @@ function cutBox(colorBox: ColorBox): Array<ColorBox> {
   return [leftBox, rightBox];
 }
 
-export default function medianCut(data, count: number = 1): Array<ColorBox> {
+export default function medianCut(
+  data: Uint8ClampedArray | number[],
+  count: number = 1
+): ColorBox[] {
   let colorBox: ColorBox = new ColorBox(data);
-  let boxes: Array<ColorBox> = [colorBox];
+  let boxes: ColorBox[] = [colorBox];
 
   while (boxes.length < count) {
     boxes.sort((prev, next) => prev.rank - next.rank);
     colorBox = boxes.pop();
-    const cutBoxes: Array<ColorBox> = cutBox(colorBox);
+    const cutBoxes: ColorBox[] = cutBox(colorBox);
     boxes = boxes.concat(cutBoxes);
   }
 
