@@ -8,11 +8,22 @@
 
 > Extract dominant colors from image. [source code](https://github.com/hunnble/dominantcolors.js)
 
-### how to use
+### install
+
+install dominantcolors.js via yarn
 
 ```sh
 yarn add dominantcolors.js
 ```
+
+you can also use [unpkg](https://unpkg.com/), just replace "version" with the current version on the link below:
+
+```html
+<script type="text/javascript"
+src="https://unpkg.com/dominantcolors.js@version/dist/dominantcolors.umd.js"
+```
+
+### quick start
 
 ```javascript
 const dominantcolorsJs = require("dominantcolors.js");
