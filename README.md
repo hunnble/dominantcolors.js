@@ -19,8 +19,10 @@ yarn add dominantcolors.js
 you can also use [unpkg](https://unpkg.com/), just replace "version" with the current version on the link below:
 
 ```html
-<script type="text/javascript"
-src="https://unpkg.com/dominantcolors.js@version/dist/dominantcolors.umd.js"
+<script
+  type="text/javascript"
+  src="https://unpkg.com/dominantcolors.js@version/dist/dominantcolors.umd.js"
+></script>
 ```
 
 ### quick start
