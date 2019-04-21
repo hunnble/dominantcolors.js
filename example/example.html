@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>example</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .title {
+        margin: 20px auto;
+        text-align: center;
+      }
+      .example-img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+      }
+      .example-boxes {
+        display: flex;
+        margin: 10px auto 80px;
+        justify-content: center;
+        align-items: center;
+        width: 800px;
+      }
+      .example-box {
+        display: inline-block;
+        border-radius: 50%;
+        margin: 10px 10px 0 0;
+        width: 80px;
+        height: 80px;
+        vertical-align: top;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">dominantcolors.js</h1>
+    <h3 class="title">examples</h3>
+    <img id="example-img1" class="example-img" src="./images/example.jpeg" />
+    <div id="example-boxes1" class="example-boxes"></div>
+    <img id="example-img2" class="example-img" src="./images/example.png" />
+    <div id="example-boxes2" class="example-boxes"></div>
+    <h3 class="title">extract more colors</h3>
+    <img id="example-img3" class="example-img" src="./images/morecolors.png" />
+    <div id="example-boxes3" class="example-boxes"></div>
+    <!-- <script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@6.4.0/dist/global/rxjs.umd.min.js"></script> -->
+    <script src="https://unpkg.com/dominantcolors.js@0.0.5/dist/dominantcolors.umd.js"></script>
+    <script>
+      dominantcolorsJs("./images/example.jpeg", {
+        count: 4
+      })
+        .then(res => {
+          var parent = document.querySelector("#example-boxes1");
+          for (let i = 0; i < res.length; i += 1) {
+            var exampleBox = document.createElement("div");
+            exampleBox.className = "example-box";
+            exampleBox.style.background = res[i];
+            parent.appendChild(exampleBox);
+          }
+        })
+        .catch(e => console.log(e));
+
+      dominantcolorsJs("./images/example.png", {
+        count: 4
+      })
+        .then(res => {
+          var parent = document.querySelector("#example-boxes2");
+          for (let i = 0; i < res.length; i += 1) {
+            var exampleBox = document.createElement("div");
+            exampleBox.className = "example-box";
+            exampleBox.style.background = res[i];
+            parent.appendChild(exampleBox);
+          }
+        })
+        .catch(e => console.log(e));
+
+      dominantcolorsJs("./images/morecolors.png", {
+        count: 8
+      })
+        .then(res => {
+          var parent = document.querySelector("#example-boxes3");
+          for (let i = 0; i < res.length; i += 1) {
+            var exampleBox = document.createElement("div");
+            exampleBox.className = "example-box";
+            exampleBox.style.background = res[i];
+            parent.appendChild(exampleBox);
+          }
+        })
+        .catch(e => console.log(e));
+    </script>
+  </body>
+</html>
