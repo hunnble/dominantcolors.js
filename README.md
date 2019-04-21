@@ -6,7 +6,7 @@
 ![downloads-image](http://img.shields.io/npm/dy/dominantcolors.js.svg)
 ![downloads-image](http://img.shields.io/npm/dt/dominantcolors.js.svg)
 
-> Extract dominant colors from image. [source code](https://github.com/hunnble/dominantcolors.js)
+> Extract dominant colors from image. [source code](https://github.com/hunnble/dominantcolors.js) | [docs](https://hunnble.github.io/dominantcolors.js) | [online examples](https://hunnble.github.io/dominantcolors.js/example/example.html)
 
 ### install
 
