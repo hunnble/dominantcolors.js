@@ -1,5 +1,5 @@
 import medianCut from "./medianCut";
-import { getColor, getImageData } from "./helper";
+import { getImageData } from "./helper";
 
 interface IOptions {
   count: number;
@@ -39,6 +39,6 @@ export default async function(
   }
 
   const func = method === "medianCut" ? medianCut : () => [];
-  const boxes = func(image, count);
-  return boxes.slice(0, count).map(box => getColor(box.data, colorFormat));
+  const colors = func(image, { count, colorFormat });
+  return colors;
 }
