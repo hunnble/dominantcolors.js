@@ -1,6 +1,7 @@
 ## dominantcolors.js
 
 ![npm-image](http://img.shields.io/npm/v/dominantcolors.js.svg)
+[![Build Status](https://travis-ci.org/hunnble/dominantcolors.js.svg?branch=master)](https://travis-ci.org/hunnble/dominantcolors.js)
 ![downloads-image](http://img.shields.io/npm/dw/dominantcolors.js.svg)
 ![downloads-image](http://img.shields.io/npm/dm/dominantcolors.js.svg)
 ![downloads-image](http://img.shields.io/npm/dy/dominantcolors.js.svg)
