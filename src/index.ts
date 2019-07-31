@@ -1,5 +1,6 @@
 import medianCut from "./medianCut";
 import { getImageData } from "./helper";
+import { ColorBox } from "./colorBox";
 
 interface IOptions {
   count: number;
@@ -19,6 +20,10 @@ export default async function(
   image: string | Uint8ClampedArray | number[],
   options: IOptions = defaultOptions
 ) {
+  if (image.length === 0) {
+    return [];
+  }
+
   if (typeof image === "string") {
     image = await getImageData(image);
   }
@@ -39,6 +44,9 @@ export default async function(
   }
 
   const func = method === "medianCut" ? medianCut : () => [];
-  const colors = func(image, { count, colorFormat });
+  const colors: (string | object | ColorBox)[] = func(image, {
+    count,
+    colorFormat
+  });
   return colors;
 }

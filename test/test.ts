@@ -1,5 +1,7 @@
 import test from "ava";
+import dc from "../src";
 
-test("test testing", t => {
-  t.is(1 + 2, 3);
+test("not get any colors when giving empty image data", async t => {
+  const colors = await dc([]);
+  t.deepEqual(colors, []);
 });
