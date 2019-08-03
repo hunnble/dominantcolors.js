@@ -1,8 +1,8 @@
 import { IColorRange } from "./interfaces";
 import { getRGBFromData } from "./helper";
 
-const MIN_COLOR = 0;
-const MAX_COLOR = 255;
+export const MIN_COLOR = 0;
+export const MAX_COLOR = 255;
 
 export class ColorBox {
   public data;
