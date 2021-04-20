@@ -52,47 +52,41 @@
     <!-- <script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@6.4.0/dist/global/rxjs.umd.min.js"></script> -->
     <script src="https://unpkg.com/dominantcolors.js@0.0.5/dist/dominantcolors.umd.js"></script>
     <script>
+      function setResult(rawRes, domEl) {
+        for (let i = 0; i < rawRes.length; i += 1) {
+          var exampleBox = document.createElement("div");
+          exampleBox.className = "example-box";
+          exampleBox.style.background = rawRes[i];
+          domEl.appendChild(exampleBox);
+        }
+      }
+
       dominantcolorsJs("./images/example.jpeg", {
         count: 4
       })
         .then(res => {
-          var parent = document.querySelector("#example-boxes1");
-          for (let i = 0; i < res.length; i += 1) {
-            var exampleBox = document.createElement("div");
-            exampleBox.className = "example-box";
-            exampleBox.style.background = res[i];
-            parent.appendChild(exampleBox);
-          }
+          var domEl = document.querySelector("#example-boxes1");
+          setResult(res, domEl);
         })
-        .catch(e => console.log(e));
+        .catch(e => console.error(e));
 
       dominantcolorsJs("./images/example.png", {
         count: 4
       })
         .then(res => {
-          var parent = document.querySelector("#example-boxes2");
-          for (let i = 0; i < res.length; i += 1) {
-            var exampleBox = document.createElement("div");
-            exampleBox.className = "example-box";
-            exampleBox.style.background = res[i];
-            parent.appendChild(exampleBox);
-          }
+          var domEl = document.querySelector("#example-boxes2");
+          setResult(res, domEl);
         })
-        .catch(e => console.log(e));
+        .catch(e => console.error(e));
 
       dominantcolorsJs("./images/morecolors.png", {
         count: 8
       })
         .then(res => {
-          var parent = document.querySelector("#example-boxes3");
-          for (let i = 0; i < res.length; i += 1) {
-            var exampleBox = document.createElement("div");
-            exampleBox.className = "example-box";
-            exampleBox.style.background = res[i];
-            parent.appendChild(exampleBox);
-          }
+          var domEl = document.querySelector("#example-boxes3");
+          setResult(res, domEl);
         })
-        .catch(e => console.log(e));
+        .catch(e => console.error(e));
     </script>
   </body>
 </html>
